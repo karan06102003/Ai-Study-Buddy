@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Study Buddy — India's Free AI Academic Assistant</title>
+  <meta name="description" content="AI Study Buddy — Free AI-powered study assistant for Engineering, BCA, MCA, BBA, MBA, BSc, Pharmacy students. Works in Hindi, Marathi & English. No API key needed." />
+  <meta name="keywords" content="AI study buddy, Marathi medium students, Hindi medium, engineering, pharmacy, BCA, MBA, free education, GPAT, GATE" />
+  <meta name="theme-color" content="#FF6B35" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===== PROFILE SETUP OVERLAY ===== -->
+<div id="profile-overlay" class="profile-overlay hidden">
+  <div class="profile-setup-card">
+    <div class="profile-setup-header">
+      <div class="profile-logo">
+        <img src="logo.png" alt="AI Study Buddy" class="profile-logo-img" />
+      </div>
+      <h2 class="profile-setup-title">Set Up Your Profile</h2>
+      <p class="profile-setup-subtitle">Tell us about yourself so we can personalize everything for you.</p>
+    </div>
+
+    <div class="profile-form">
+      <div class="form-group">
+        <label class="form-label">👤 Your Name (optional)</label>
+        <input type="text" id="profile-name" class="form-input" placeholder="What should we call you?" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">🌐 Preferred Language</label>
+        <div class="lang-picker">
+          <button class="lang-pick-btn active" data-lang="en">🇬🇧 English</button>
+          <button class="lang-pick-btn" data-lang="hi">🇮🇳 हिंदी</button>
+          <button class="lang-pick-btn" data-lang="mr">🏵️ मराठी</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">📚 Your Course / Branch</label>
+        <div class="branch-group-list" id="branch-group-list"></div>
+      </div>
+
+      <div class="form-group" id="semester-group">
+        <label class="form-label">📅 Current Year / Semester</label>
+        <select id="profile-semester" class="select-input">
+          <option value="1st Year / Semester 1-2">1st Year / Sem 1-2</option>
+          <option value="2nd Year / Semester 3-4">2nd Year / Sem 3-4</option>
+          <option value="3rd Year / Semester 5-6">3rd Year / Sem 5-6</option>
+          <option value="Final Year / Semester 7-8">Final Year / Sem 7-8</option>
+          <option value="Postgraduate - 1st Year">PG - 1st Year</option>
+          <option value="Postgraduate - 2nd Year">PG - 2nd Year</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="board-group">
+        <label class="form-label">🏛️ University / Board</label>
+        <select id="profile-university" class="select-input">
+          <option value="Mumbai University">Mumbai University</option>
+          <option value="SPPU Pune">SPPU Pune</option>
+          <option value="Nagpur University">Nagpur University</option>
+          <option value="GTU Gujarat">GTU Gujarat</option>
+          <option value="VTU Karnataka">VTU Karnataka</option>
+          <option value="RGPV MP">RGPV MP</option>
+          <option value="AKTU UP">AKTU UP</option>
+          <option value="Maharashtra HSC">Maharashtra HSC Board</option>
+          <option value="CBSE">CBSE</option>
+          <option value="Other University">Other University</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">🏫 Medium Background</label>
+        <div class="medium-picker">
+          <button class="medium-btn active" data-medium="Marathi Medium">🏵️ Marathi Medium</button>
+          <button class="medium-btn" data-medium="Hindi Medium">🇮🇳 Hindi Medium</button>
+          <button class="medium-btn" data-medium="English Medium">🇬🇧 English Medium</button>
+          <button class="medium-btn" data-medium="Mixed">🤝 Mixed</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary profile-save-btn" id="profile-save-btn" style="width:100%;margin-top:8px;font-size:16px;padding:14px;">
+      🚀 Start Studying!
+    </button>
+    <p style="text-align:center;font-size:12px;color:var(--text-secondary);margin-top:8px;">
+      You can always change this later in Settings ⚙️
+    </p>
+  </div>
+</div>
+
+<!-- ===== ONBOARDING OVERLAY ===== -->
+<div id="onboarding-overlay" class="onboarding-overlay hidden">
+  <div class="onboarding-container">
+    <button class="onboarding-skip" id="onboarding-skip-btn">Skip →</button>
+    <div class="onboarding-slides">
+
+      <!-- Slide 1 -->
+      <div class="onboarding-slide active" data-slide="1">
+        <div class="onboarding-art">
+          <div class="ob-flag">🇮🇳</div>
+          <div class="ob-book">📚</div>
+          <div class="ob-star">⭐</div>
+        </div>
+        <h1 class="ob-title">नमस्ते! <br/>AI Study Buddy में<br/>आपका स्वागत है</h1>
+        <p class="ob-desc">India's most complete free AI study assistant — for Engineering, BCA, MCA, BBA, MBA, BSc, Pharmacy &amp; Class 11/12 students.</p>
+        <div class="ob-mission">
+          <span>🎯</span> Making quality education accessible to every Indian student — regardless of language or financial background.
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="onboarding-slide" data-slide="2">
+        <div class="ob-icon-big">🤖</div>
+        <h2 class="ob-title">100% Free — No Sign Up!</h2>
+        <p class="ob-desc">Uses <strong>GPT-4o</strong> (the most advanced AI) via Pollinations.ai — completely free. No API key, no account, no credit card.</p>
+        <div class="ob-steps">
+          <div class="ob-step"><span class="ob-step-num">✓</span> No API key required</div>
+          <div class="ob-step"><span class="ob-step-num">✓</span> No sign-up needed</div>
+          <div class="ob-step"><span class="ob-step-num">✓</span> Works on any phone with internet</div>
+          <div class="ob-step"><span class="ob-step-num">✓</span> Hindi, Marathi &amp; English support</div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="onboarding-slide" data-slide="3">
+        <h2 class="ob-title">What can I do for you?</h2>
+        <div class="ob-features-grid">
+          <div class="ob-feat-card"><div class="ob-feat-icon">💡</div><div class="ob-feat-name">Topic Explainer</div><div class="ob-feat-desc">Any topic with Indian analogies &amp; memory tricks</div></div>
+          <div class="ob-feat-card"><div class="ob-feat-icon">💬</div><div class="ob-feat-name">Doubt Solver</div><div class="ob-feat-desc">Chat in Hindi, Marathi or English</div></div>
+          <div class="ob-feat-card"><div class="ob-feat-icon">💻</div><div class="ob-feat-name">Code Playground</div><div class="ob-feat-desc">Run code + AI debugging</div></div>
+          <div class="ob-feat-card"><div class="ob-feat-icon">💊</div><div class="ob-feat-name">Drug Reference</div><div class="ob-feat-desc">Pharmacy students' guide</div></div>
+          <div class="ob-feat-card"><div class="ob-feat-icon">📊</div><div class="ob-feat-name">Business Tools</div><div class="ob-feat-desc">Case studies, GD prep, business math</div></div>
+          <div class="ob-feat-card"><div class="ob-feat-icon">🚀</div><div class="ob-feat-name">Career Prep</div><div class="ob-feat-desc">Aptitude, interviews, resume</div></div>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="onboarding-slide" data-slide="4">
+        <div class="ob-icon-big">🚀</div>
+        <h2 class="ob-title ob-ready-title">तैयार हो? Let's Go!</h2>
+        <p class="ob-desc">Your AI study partner is ready. Next, set up your profile so we can personalize everything for you.</p>
+        <div class="ob-quote-box">
+          "अपनी भाषा में सोचो, अंग्रेजी में लिखो — दोनों तुम्हारी ताकत हैं।"
+        </div>
+        <button class="btn-primary ob-start-btn" id="ob-start-btn">
+          Set Up My Profile 🎓
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="ob-dots">
+      <span class="ob-dot active" data-dot="1"></span>
+      <span class="ob-dot" data-dot="2"></span>
+      <span class="ob-dot" data-dot="3"></span>
+      <span class="ob-dot" data-dot="4"></span>
+    </div>
+
+    <!-- Navigation -->
+    <div class="ob-nav">
+      <button class="ob-nav-btn" id="ob-prev-btn" style="visibility:hidden;">← Back</button>
+      <button class="ob-nav-btn primary" id="ob-next-btn">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== OFFLINE BANNER ===== -->
+<div id="offline-banner" class="offline-banner hidden">
+  ⚠️ You are offline. Some features may not work. Previously loaded content is still available.
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app" class="app-wrapper">
+
+  <!-- HEADER -->
+  <header class="app-header" id="app-header">
+    <div class="header-left">
+      <div class="app-logo">
+        <img src="logo.png" alt="AI Study Buddy" class="header-logo-img" />
+      </div>
+      <div class="logo-tagline" id="header-tagline">Your Personal Learning Companion</div>
+    </div>
+    <div class="header-right">
+      <div id="profile-badge" class="profile-badge hidden" onclick="navigateTo('settings')"></div>
+      <div class="lang-toggle" id="lang-toggle">
+        <button class="lang-btn active" data-lang="en" id="lang-en">EN</button>
+        <button class="lang-btn" data-lang="hi" id="lang-hi">हि</button>
+        <button class="lang-btn" data-lang="mr" id="lang-mr">म</button>
+      </div>
+      <button class="header-icon-btn" id="settings-btn" title="Settings" aria-label="Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="app-layout">
+
+    <!-- SIDEBAR (Desktop/Tablet) -->
+    <nav class="app-sidebar" id="app-sidebar">
+      <ul class="sidebar-nav-list">
+        <li>
+          <button class="sidebar-nav-item active" data-page="home" id="nav-home">
+            <span class="nav-icon">💡</span>
+            <span class="nav-label" data-i18n="nav_explainer">Topic Explainer</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-nav-item" data-page="chat" id="nav-chat">
+            <span class="nav-icon">💬</span>
+            <span class="nav-label" data-i18n="nav_chat">Doubt Solver</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-nav-item" data-page="translator" id="nav-translator">
+            <span class="nav-icon">🌐</span>
+            <span class="nav-label" data-i18n="nav_translator">Translator</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-nav-item" data-page="mocktest" id="nav-mocktest">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label" data-i18n="nav_mocktest">Mock Test</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-nav-item" data-page="flashcards" id="nav-flashcards">
+            <span class="nav-icon">🃏</span>
+            <span class="nav-label" data-i18n="nav_flashcards">Flashcards</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-nav-item" data-page="planner" id="nav-planner">
+            <span class="nav-icon">📅</span>
+            <span class="nav-label" data-i18n="nav_planner">Study Planner</span>
+          </button>
+        </li>
+        <!-- Branch-Specific Nav Items -->
+        <li id="nav-code-li" class="hidden">
+          <button class="sidebar-nav-item branch-nav" data-page="code" id="nav-code">
+            <span class="nav-icon">💻</span>
+            <span class="nav-label">Code Playground</span>
+          </button>
+        </li>
+        <li id="nav-drug-li" class="hidden">
+          <button class="sidebar-nav-item branch-nav" data-page="drug" id="nav-drug">
+            <span class="nav-icon">💊</span>
+            <span class="nav-label">Drug Reference</span>
+          </button>
+        </li>
+        <li id="nav-casestudy-li" class="hidden">
+          <button class="sidebar-nav-item branch-nav" data-page="casestudy" id="nav-casestudy">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Business Tools</span>
+          </button>
+        </li>
+        <li id="nav-placement-li" class="hidden">
+          <button class="sidebar-nav-item branch-nav" data-page="placement" id="nav-placement">
+            <span class="nav-icon">🚀</span>
+            <span class="nav-label">Career Prep</span>
+          </button>
+        </li>
+        <!-- Always visible -->
+        <li>
+          <button class="sidebar-nav-item" data-page="dashboard" id="nav-dashboard">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label" data-i18n="nav_dashboard">Dashboard</span>
+          </button>
+        </li>
+        <li>
+          <button class="sidebar-nav-item" data-page="settings" id="nav-settings">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label" data-i18n="nav_settings">Settings</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="app-main" id="app-main">
+
+      <!-- PAGE: HOME (Topic Explainer) -->
+      <div class="page active" id="page-home">
+        <div class="page-hero">
+          <h1 class="page-title" data-i18n="home_title">💡 Topic Explainer</h1>
+          <p class="page-subtitle" data-i18n="home_subtitle">Type any topic, textbook paragraph, or exam question — get a complete, simple explanation in your language.</p>
+        </div>
+        <div class="input-card">
+          <div class="input-row">
+            <textarea id="explainer-input" class="main-textarea" placeholder="Type your topic here... (e.g., Photosynthesis / प्रकाश संश्लेषण / Demand and Supply / Pharmacokinetics / Linked List)" rows="4" aria-label="Topic input"></textarea>
+            <button class="mic-btn" id="explainer-mic" title="Speak your question" aria-label="Voice input">🎤</button>
+          </div>
+          <div class="input-actions">
+            <select id="explainer-class" class="select-input" aria-label="Select class">
+              <option value="Class 11">Class 11</option>
+              <option value="Class 12">Class 12</option>
+              <option value="First Year Engineering">1st Year Engineering</option>
+              <option value="Second Year Engineering">2nd Year Engineering</option>
+              <option value="Third Year Engineering">3rd Year Engineering</option>
+              <option value="Final Year Engineering">Final Year Engineering</option>
+              <option value="BCA">BCA</option>
+              <option value="MCA">MCA</option>
+              <option value="BBA">BBA</option>
+              <option value="MBA">MBA</option>
+              <option value="BSc">BSc</option>
+              <option value="MSc">MSc</option>
+              <option value="B.Pharm">B.Pharm</option>
+              <option value="D.Pharm">D.Pharm</option>
+              <option value="M.Pharm">M.Pharm</option>
+              <option value="Pharm.D">Pharm.D</option>
+            </select>
+            <select id="explainer-board" class="select-input" aria-label="Select board">
+              <option value="Maharashtra HSC">Maharashtra HSC</option>
+              <option value="CBSE">CBSE</option>
+              <option value="ICSE">ICSE</option>
+              <option value="Mumbai University">Mumbai University</option>
+              <option value="SPPU Pune">SPPU Pune</option>
+              <option value="GTU">GTU</option>
+              <option value="VTU">VTU</option>
+              <option value="GPAT">GPAT</option>
+              <option value="University">Other University</option>
+            </select>
+            <button class="btn-primary" id="explainer-btn" data-i18n="btn_explain">
+              ✨ Explain This!
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick topic suggestions -->
+        <div id="quick-topics" class="quick-topics-bar"></div>
+
+        <!-- Loading State -->
+        <div class="loading-state hidden" id="explainer-loading">
+          <div class="skeleton-card"></div>
+          <div class="loading-messages" id="loading-msg">AI समझ रहा है...</div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="explainer-results" class="results-container"></div>
+      </div>
+
+      <!-- PAGE: CHAT (Doubt Solver) -->
+      <div class="page hidden" id="page-chat">
+        <div class="page-hero">
+          <h1 class="page-title" data-i18n="chat_title">💬 Doubt Solver</h1>
+          <p class="page-subtitle" data-i18n="chat_subtitle">Ask any doubt in Hindi, Marathi, or English. I answer in your language!</p>
+        </div>
+        <div class="chat-container" id="chat-container">
+          <div class="chat-messages" id="chat-messages">
+            <div class="chat-welcome">
+              <div class="chat-welcome-icon">🤖</div>
+              <div class="chat-welcome-text">
+                <strong>नमस्ते! मैं AI Study Buddy हूँ।</strong><br/>
+                आपके कोई भी प्रश्न पूछें — हिंदी में, मराठी में, या English में।<br/>
+                <em>Ask me anything about your studies!</em>
+              </div>
+            </div>
+            <!-- Quick question templates -->
+            <div class="chat-quick-prompts" id="chat-quick-prompts">
+              <div class="quick-prompt-label">Quick Questions:</div>
+              <button class="quick-prompt-chip">Explain [topic] in simple words</button>
+              <button class="quick-prompt-chip">Difference between [A] and [B]?</button>
+              <button class="quick-prompt-chip">How does this work in real life?</button>
+              <button class="quick-prompt-chip">Write a short note on [topic] for 5 marks</button>
+              <button class="quick-prompt-chip">Advantages and disadvantages of [topic]</button>
+            </div>
+          </div>
+          <div class="chat-thinking hidden" id="chat-thinking">
+            <div class="thinking-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="thinking-text" id="thinking-text">AI समझ रहा है...</span>
+          </div>
+          <div class="chat-input-area">
+            <div class="chat-input-row">
+              <textarea id="chat-input" class="chat-textarea" placeholder="अपना प्रश्न यहाँ लिखें... / Type your question here..." rows="2" aria-label="Chat input"></textarea>
+              <button class="mic-btn" id="chat-mic" title="Voice input" aria-label="Voice input">🎤</button>
+              <button class="send-btn" id="chat-send" aria-label="Send message">➤</button>
+            </div>
+            <div class="chat-actions">
+              <button class="action-chip" id="chat-clear" data-i18n="btn_clear_chat">🗑️ Clear Chat</button>
+              <button class="action-chip" id="chat-export">📤 Export Chat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: TRANSLATOR -->
+      <div class="page hidden" id="page-translator">
+        <div class="page-hero">
+          <h1 class="page-title" data-i18n="trans_title">🌐 Language Bridge</h1>
+          <p class="page-subtitle" data-i18n="trans_subtitle">Paste any English paragraph from your textbook — get it in simple Hindi, Marathi &amp; simplified English.</p>
+        </div>
+        <div class="input-card">
+          <div class="input-row">
+            <textarea id="translator-input" class="main-textarea" placeholder="Paste English text from your textbook here..." rows="5" aria-label="Text to translate"></textarea>
+            <button class="mic-btn" id="translator-mic" title="Voice input" aria-label="Voice input">🎤</button>
+          </div>
+          <div class="input-actions">
+            <button class="btn-primary" id="translator-btn" data-i18n="btn_translate">
+              🌐 Translate &amp; Simplify
+            </button>
+          </div>
+        </div>
+        <div class="loading-state hidden" id="translator-loading">
+          <div class="skeleton-card"></div>
+          <div class="loading-messages">Translating...</div>
+        </div>
+        <div id="translator-results" class="results-container"></div>
+      </div>
+
+      <!-- PAGE: MOCK TEST -->
+      <div class="page hidden" id="page-mocktest">
+        <div class="page-hero">
+          <h1 class="page-title" data-i18n="test_title">📝 Mock Test Generator</h1>
+          <p class="page-subtitle" data-i18n="test_subtitle">Generate a complete exam-style test with auto-evaluation and detailed answers.</p>
+        </div>
+        <div id="test-setup-panel">
+          <div class="input-card">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" data-i18n="test_subject">Subject</label>
+                <input type="text" id="test-subject" class="form-input" placeholder="e.g., Biology, Economics, Data Structures" aria-label="Subject" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="test_topic">Topic</label>
+                <input type="text" id="test-topic" class="form-input" placeholder="e.g., Photosynthesis, Linked Lists, NPV" aria-label="Topic" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="test_class">Class / Course Level</label>
+                <select id="test-class" class="select-input" aria-label="Class level">
+                  <option value="Class 11th">Class 11th</option>
+                  <option value="Class 12th">Class 12th</option>
+                  <option value="1st Year Engineering">1st Year Engineering</option>
+                  <option value="2nd Year Engineering">2nd Year Engineering</option>
+                  <option value="3rd Year Engineering">3rd Year Engineering</option>
+                  <option value="Final Year Engineering">Final Year Engineering</option>
+                  <option value="BCA">BCA</option>
+                  <option value="MCA">MCA</option>
+                  <option value="BBA">BBA</option>
+                  <option value="MBA">MBA</option>
+                  <option value="BSc">BSc</option>
+                  <option value="B.Pharm">B.Pharm</option>
+                  <option value="D.Pharm">D.Pharm</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="test_board">Exam Board / University</label>
+                <select id="test-board" class="select-input" aria-label="Exam board">
+                  <option value="Maharashtra HSC">Maharashtra HSC</option>
+                  <option value="CBSE">CBSE</option>
+                  <option value="Mumbai University">Mumbai University</option>
+                  <option value="SPPU Pune">SPPU Pune</option>
+                  <option value="GTU">GTU</option>
+                  <option value="GPAT">GPAT</option>
+                  <option value="University">Other University</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="test_duration">Test Duration</label>
+                <select id="test-duration" class="select-input" aria-label="Test duration">
+                  <option value="10">10 minutes (Quick Quiz)</option>
+                  <option value="20">20 minutes (Short Test)</option>
+                  <option value="30" selected>30 minutes (Full Test)</option>
+                  <option value="60">60 minutes (Exam Level)</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-actions">
+              <button class="btn-primary" id="test-generate-btn" data-i18n="btn_generate_test">
+                📝 Generate Mock Test
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="loading-state hidden" id="test-loading">
+          <div class="skeleton-card"></div>
+          <div class="loading-messages">Generating your test...</div>
+        </div>
+        <div id="test-area" class="hidden"></div>
+        <div id="test-results-area" class="hidden"></div>
+      </div>
+
+      <!-- PAGE: FLASHCARDS -->
+      <div class="page hidden" id="page-flashcards">
+        <div class="page-hero">
+          <h1 class="page-title" data-i18n="flash_title">🃏 Smart Flashcards</h1>
+          <p class="page-subtitle" data-i18n="flash_subtitle">Generate flashcards from any topic. Study smart with spaced repetition.</p>
+        </div>
+        <div id="flashcard-setup">
+          <div class="input-card">
+            <div class="input-row">
+              <textarea id="flashcard-input" class="main-textarea" placeholder="Enter a topic or paste your notes to generate flashcards..." rows="3" aria-label="Flashcard topic"></textarea>
+            </div>
+            <div class="input-actions">
+              <button class="btn-primary" id="flashcard-generate-btn" data-i18n="btn_generate_cards">
+                🃏 Generate Flashcards
+              </button>
+              <button class="btn-secondary" id="flashcard-saved-btn" data-i18n="btn_saved_decks">
+                📚 My Saved Decks
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="loading-state hidden" id="flashcard-loading">
+          <div class="skeleton-card"></div>
+          <div class="loading-messages">Creating your flashcards...</div>
+        </div>
+        <div id="flashcard-area"></div>
+        <div id="saved-decks-area" class="hidden"></div>
+      </div>
+
+      <!-- PAGE: PLANNER -->
+      <div class="page hidden" id="page-planner">
+        <div class="page-hero">
+          <h1 class="page-title" data-i18n="plan_title">📅 Study Planner</h1>
+          <p class="page-subtitle" data-i18n="plan_subtitle">Enter your exam details and get a personalized day-by-day study plan.</p>
+        </div>
+        <div id="planner-setup">
+          <div class="input-card">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Subject</label>
+                <input type="text" id="planner-subject" class="form-input" placeholder="e.g., Physics, Data Structures, Pharmacology" aria-label="Subject" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Exam Date</label>
+                <input type="date" id="planner-date" class="form-input" aria-label="Exam date" />
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">Topics to Cover</label>
+                <textarea id="planner-topics" class="form-input" rows="3" placeholder="List the topics you need to study (comma-separated or each on new line)..." aria-label="Topics"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Current Preparation Level</label>
+                <div class="star-rating" id="planner-stars" role="radiogroup" aria-label="Preparation level">
+                  <button class="star" data-val="1" aria-label="1 star">⭐</button>
+                  <button class="star" data-val="2" aria-label="2 stars">⭐</button>
+                  <button class="star" data-val="3" aria-label="3 stars">⭐</button>
+                  <button class="star" data-val="4" aria-label="4 stars">⭐</button>
+                  <button class="star" data-val="5" aria-label="5 stars">⭐</button>
+                </div>
+                <span class="star-label" id="star-label">Select your level</span>
+              </div>
+            </div>
+            <div class="input-actions">
+              <button class="btn-primary" id="planner-generate-btn" data-i18n="btn_generate_plan">
+                📅 Generate Study Plan
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="loading-state hidden" id="planner-loading">
+          <div class="skeleton-card"></div>
+          <div class="loading-messages">Planning your study schedule...</div>
+        </div>
+        <div id="planner-area"></div>
+      </div>
+
+      <!-- PAGE: CODE PLAYGROUND (Branch-specific) -->
+      <div class="page hidden" id="page-code"></div>
+
+      <!-- PAGE: DRUG REFERENCE (Pharmacy-specific) -->
+      <div class="page hidden" id="page-drug"></div>
+
+      <!-- PAGE: CASE STUDY (MBA/BBA-specific) -->
+      <div class="page hidden" id="page-casestudy"></div>
+
+      <!-- PAGE: PLACEMENT PREP (Engineering/CS/MBA) -->
+      <div class="page hidden" id="page-placement"></div>
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page hidden" id="page-dashboard">
+        <div class="page-hero">
+          <h1 class="page-title" data-i18n="dash_title">📊 My Progress</h1>
+          <p class="page-subtitle" data-i18n="dash_subtitle">Track your learning journey and celebrate your achievements.</p>
+        </div>
+        <div id="dashboard-content"></div>
+      </div>
+
+      <!-- PAGE: SETTINGS -->
+      <div class="page hidden" id="page-settings">
+        <div class="page-hero">
+          <h1 class="page-title">⚙️ Settings</h1>
+          <p class="page-subtitle">Manage your profile, language, and data.</p>
+        </div>
+        <div class="settings-container">
+
+          <!-- Profile Card -->
+          <div class="settings-card" id="settings-profile-card">
+            <h3 class="settings-card-title">👤 My Academic Profile</h3>
+            <div id="settings-profile-display"></div>
+            <button class="btn-secondary" id="edit-profile-btn" style="margin-top:12px;">✏️ Edit Profile</button>
+          </div>
+
+          <div class="settings-card">
+            <h3 class="settings-card-title">🤖 About AI Engine</h3>
+            <p class="settings-desc">AI Study Buddy uses <strong>GPT-4o via Pollinations.ai</strong> — the most capable free AI available. No API key or account is needed.</p>
+            <div class="ob-steps" style="margin-top:8px;">
+              <div class="ob-step"><span class="ob-step-num">✓</span> GPT-4o — best free AI for reasoning &amp; problem solving</div>
+              <div class="ob-step"><span class="ob-step-num">✓</span> No API key required</div>
+              <div class="ob-step"><span class="ob-step-num">✓</span> 100% free forever</div>
+              <div class="ob-step"><span class="ob-step-num">✓</span> Privacy: Your questions are not stored</div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3 class="settings-card-title">🌐 Language Preference</h3>
+            <div class="lang-options">
+              <button class="lang-option-btn" data-lang="en" id="settings-lang-en">🇬🇧 English</button>
+              <button class="lang-option-btn" data-lang="hi" id="settings-lang-hi">🇮🇳 हिंदी (Hindi)</button>
+              <button class="lang-option-btn" data-lang="mr" id="settings-lang-mr">🏵️ मराठी (Marathi)</button>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3 class="settings-card-title">🔊 Voice &amp; Speech</h3>
+            <div class="form-group">
+              <label class="form-label">Speech Language</label>
+              <select id="speech-lang-select" class="select-input" aria-label="Speech language">
+                <option value="en-IN">English (India)</option>
+                <option value="hi-IN">Hindi (India)</option>
+                <option value="mr-IN">Marathi (India)</option>
+              </select>
+            </div>
+            <button class="btn-secondary" id="test-tts-btn">🔊 Test Text-to-Speech</button>
+          </div>
+
+          <div class="settings-card danger-card">
+            <h3 class="settings-card-title">🗑️ Data Management</h3>
+            <p class="settings-desc">Clear your stored data. This cannot be undone.</p>
+            <div class="inline-actions">
+              <button class="btn-danger" id="clear-chat-history-btn">Clear Chat History</button>
+              <button class="btn-danger" id="clear-progress-btn">Clear Progress Data</button>
+              <button class="btn-danger" id="clear-all-btn">⚠️ Clear All Data</button>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3 class="settings-card-title">ℹ️ About AI Study Buddy</h3>
+            <p class="settings-desc">
+              AI Study Buddy v2.0 — India's most complete free AI study assistant.
+              Built for Engineering · BCA · MCA · BBA · MBA · BSc · MSc · Pharmacy · Class 11/12.
+            </p>
+            <p class="settings-desc">
+              <strong>AI Engine:</strong> GPT-4o via Pollinations.ai (100% free, no key)<br/>
+              <strong>Code Runner:</strong> Piston API (free, supports 40+ languages)<br/>
+              <strong>Languages:</strong> English · हिंदी · मराठी<br/>
+              <strong>Version:</strong> 2.0.0
+            </p>
+            <div class="ob-quote-box" style="margin-top:12px;">
+              "शिक्षा सबसे शक्तिशाली हथियार है।" — Nelson Mandela
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- BOTTOM NAV (Mobile) -->
+  <nav class="bottom-nav" id="bottom-nav" aria-label="Main navigation">
+    <button class="bottom-nav-item active" data-page="home" aria-label="Topic Explainer">
+      <span class="bnav-icon">💡</span>
+      <span class="bnav-label" data-i18n="nav_home">Home</span>
+    </button>
+    <button class="bottom-nav-item" data-page="chat" aria-label="Doubt Solver">
+      <span class="bnav-icon">💬</span>
+      <span class="bnav-label" data-i18n="nav_chat">Chat</span>
+    </button>
+    <button class="bottom-nav-item" data-page="mocktest" aria-label="Mock Test">
+      <span class="bnav-icon">📝</span>
+      <span class="bnav-label" data-i18n="nav_mocktest">Test</span>
+    </button>
+    <button class="bottom-nav-item" data-page="flashcards" aria-label="Flashcards">
+      <span class="bnav-icon">🃏</span>
+      <span class="bnav-label" data-i18n="nav_flashcards">Cards</span>
+    </button>
+    <button class="bottom-nav-item" data-page="dashboard" aria-label="Dashboard">
+      <span class="bnav-icon">📊</span>
+      <span class="bnav-label" data-i18n="nav_dashboard">Stats</span>
+    </button>
+  </nav>
+
+</div>
+
+<!-- Scripts — order matters for dependencies -->
+<script src="features/subjects.js"></script>
+<script src="features/gemini.js"></script>
+<script src="features/explainer.js"></script>
+<script src="features/translator.js"></script>
+<script src="features/mocktest.js"></script>
+<script src="features/chat.js"></script>
+<script src="features/planner.js"></script>
+<script src="features/flashcards.js"></script>
+<script src="features/dashboard.js"></script>
+<script src="features/code-playground.js"></script>
+<script src="features/drug-reference.js"></script>
+<script src="features/case-study.js"></script>
+<script src="features/placement.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
